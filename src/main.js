@@ -1,4 +1,4 @@
-import { Application, Router } from "./deps.ts";
+import { Application, Router, red } from "./deps.ts";
 import { logging, timing, erroring } from "./logging.ts";
 
 const router = new Router()
@@ -15,19 +15,43 @@ app.use(timing);
 // simple errors?
 app.use(erroring)
 
-app.addEventListener("error", (e) => {
-  console.log("ERROR: ", e.error);
+app.addEventListener("error", (evt) => {
+  let msg = `[${red("error")}] `;
+  if (evt.error instanceof Error) {
+    msg += `${evt.error.name}: ${evt.error.message}`;
+  } else {
+    msg += Deno.inspect(evt.error);
+  }
+  if (
+    (evt.error instanceof HttpError && evt.error.status >= 400 &&
+      evt.error.status <= 499)
+  ) {
+    if (evt.context) {
+      msg += `\n\nrequest:\n  url: ${evt.context.request.url}\n  headers: ${
+        Deno.inspect([...evt.context.request.headers])
+      }\n`;
+    }
+  }
+  if (evt.error instanceof Error && evt.error.stack) {
+    const stack = evt.error.stack.split("\n");
+    stack.shift();
+    msg += `\n\n${stack.join("\n")}\n`;
+  }
+  console.error(msg);
 });
 
-app.addEventListener("listen", (e) => {
-  console.log(e.hostname);
-  console.log(`Listening on http://${e.hostname}:${e.port}/`);
+app.addEventListener("listen", (evt) => {
+  console.log(
+    `listening on ${
+      evt.secure ? "https" : "http"
+    }://${evt.hostname}:${evt.port}/`,
+  );
 });
 
 app.use(router.routes())
 app.use(router.allowedMethods())
 
-addEventListener("fetch", app.fetchEventHandler())
+// addEventListener("fetch", app.fetchEventHandler())
 
 console.log("Starting server");
-await app.listen({ hostname: "localhost", port: 8080 });
+app.listen({ hostname: "localhost", port: 8080 });
