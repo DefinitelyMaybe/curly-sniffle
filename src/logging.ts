@@ -17,7 +17,7 @@ export const timing: Middleware = async (ctx, next) => {
   ctx.response.headers.set("X-Response-Time", `${ms}ms`);
 };
 
-export const erroring: Middleware = async (ctx, next) => {
+export const erroring: Middleware = async (_ctx, next) => {
   try {
     await next();
   } catch (err) {

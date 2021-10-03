@@ -1,19 +1,19 @@
-import { Application, Router, red } from "./deps.ts";
+import { Application, Router, red, green, bold, HttpError } from "./deps.ts";
 import { logging, timing, erroring } from "./logging.ts";
 
 const router = new Router()
-router.get("/", (ctx, next) => {
+router.get("/", (ctx) => {
   ctx.response.body = "Nothing here yet."
   // Deno.readTextFile("index.html")
 })
 const app = new Application();
 
-// Basic Logging
 app.use(logging);
-// Add timing to response headers
 app.use(timing);
-// simple errors?
 app.use(erroring)
+
+app.use(router.routes())
+app.use(router.allowedMethods())
 
 app.addEventListener("error", (evt) => {
   let msg = `[${red("error")}] `;
@@ -48,10 +48,5 @@ app.addEventListener("listen", (evt) => {
   );
 });
 
-app.use(router.routes())
-app.use(router.allowedMethods())
-
-// addEventListener("fetch", app.fetchEventHandler())
-
-console.log("Starting server");
+console.log(bold(green("Starting server")));
 app.listen({ hostname: "localhost", port: 8080 });
