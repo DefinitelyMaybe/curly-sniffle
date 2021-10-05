@@ -1,3 +1,8 @@
 # curly-sniffle
 
-Figuring out how to devops it
+Doing some devops yo.
+
+Next steps:
+
+- WebFramework
+  - Svelte 
