@@ -1,19 +1,19 @@
-import { Application, Router, red, green, bold, HttpError } from "./deps.ts";
-import { logging, timing, erroring } from "./logging.ts";
+import { Application, bold, green, HttpError, red, Router } from "./deps.ts";
+import { erroring, logging, timing } from "./logging.ts";
 
-const router = new Router()
+const router = new Router();
 router.get("/", (ctx) => {
-  ctx.response.body = "Nothing here yet."
+  ctx.response.body = "Nothing here yet.";
   // Deno.readTextFile("index.html")
-})
+});
 const app = new Application();
 
 app.use(logging);
 app.use(timing);
-app.use(erroring)
+app.use(erroring);
 
-app.use(router.routes())
-app.use(router.allowedMethods())
+app.use(router.routes());
+app.use(router.allowedMethods());
 
 app.addEventListener("error", (evt) => {
   let msg = `[${red("error")}] `;

@@ -1,12 +1,12 @@
-import { red, green, cyan, bold, Middleware } from "./deps.ts";
+import { bold, cyan, green, Middleware, red } from "./deps.ts";
 
 export const logging: Middleware = async (ctx, next) => {
   await next();
   const rt = ctx.response.headers.get("X-Response-Time");
   console.log(
-    `${green(ctx.request.method)} ${
-      cyan(ctx.request.url.pathname)
-    } - ${bold(String(rt))}`
+    `${green(ctx.request.method)} ${cyan(ctx.request.url.pathname)} - ${
+      bold(String(rt))
+    }`,
   );
 };
 
@@ -30,6 +30,6 @@ export const erroring: Middleware = async (_ctx, next) => {
     //   //
     // }
 
-    throw err
+    throw err;
   }
-}
+};

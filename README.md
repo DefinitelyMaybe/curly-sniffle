@@ -1,3 +1,3 @@
 # curly-sniffle
 
-Figuring out how to server it
+Figuring out how to devops it
