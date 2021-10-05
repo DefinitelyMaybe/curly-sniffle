@@ -27,8 +27,8 @@ jobs:
         with:
           deno-version: v1.x
 
-      # - name: Build frontend?
-      #   run: deno build.ts
+      - name: Build frontend?
+        run: deno run build.ts
 
       # Uncomment this step to verify the use of 'deno fmt' on each commit.
       - name: Verify formatting
