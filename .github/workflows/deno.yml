@@ -10,9 +10,8 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  setup:
     runs-on: ubuntu-latest
-
     steps:
       - name: Setup repo
         uses: actions/checkout@v2
@@ -21,10 +20,16 @@ jobs:
         uses: denoland/setup-deno@v1
         with:
           deno-version: v1.x
-
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Build step
-        run: deno run -A --unstable build.ts
-
+        run: deno run -A --unstable util/build.ts
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
       - name: Verify formatting
         run: deno fmt --check
 

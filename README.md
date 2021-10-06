@@ -5,4 +5,4 @@ Doing some devops yo.
 Next steps:
 
 - WebFramework
-  - Svelte 
+  - Svelte
