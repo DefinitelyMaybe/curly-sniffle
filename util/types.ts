@@ -1,11 +1,10 @@
+// deno-lint-ignore-file
 /**
  * Copyright (c) Crew Dev.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-
-import type { Plugin, RollupBuild } from "../imports/drollup.ts";
 
 export interface compileOptions {
   filename?: string;
@@ -109,8 +108,8 @@ export interface RollupBuildProps {
   dir?: string;
   entryFile?: string;
   generate?: "dom" | "ssg" | "ssr";
-  plugins?: Plugin[];
+  plugins?: [];
   production?: boolean;
   ipv4?: string;
-  cache?: undefined | RollupBuild["cache"];
+  cache?: undefined | any;
 }

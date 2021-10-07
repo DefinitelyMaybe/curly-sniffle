@@ -1,5 +1,5 @@
 <script>
-  let x = "world"
+  let x = "svelte"
 </script>
 
 <h1>hello {x}</h1>

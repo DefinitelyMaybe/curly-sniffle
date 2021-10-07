@@ -3,8 +3,7 @@ import { erroring, logging, timing } from "./logging.ts";
 
 const router = new Router();
 router.get("/", (ctx) => {
-  ctx.response.body = "Nothing here yet.";
-  // Deno.readTextFile("index.html")
+  ctx.response.body = Deno.readTextFileSync("index.html");
 });
 const app = new Application();
 
