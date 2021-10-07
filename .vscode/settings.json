@@ -5,6 +5,10 @@
   "deno.unstable": true,
   "deno.suggest.imports.autoDiscover": true,
   "deno.suggest.imports.hosts": {
-    "https://deno.land": true
+    "https://deno.land": true,
+    "https://esm.sh": false,
+    "https://cdn.skypack.dev": false,
+    "https://e": false,
+    "https://esm.": false
   }
 }
